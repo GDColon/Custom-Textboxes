@@ -19,7 +19,7 @@ std::string queuedTextbox = "";
 
 std::string showKey = "to-show";
 std::string altShowKey = "to-show-alt";
-std::string ctrlShowKey = "to-show-ctrl"
+std::string ctrlShowKey = "to-show-ctrl";
 
 // ===== //
 
@@ -55,7 +55,7 @@ std::string getTargetID(std::string path, int modify) {
 	auto rawJSON = readJSON(path);
     if (rawJSON == nullptr) return "";
 
-	auto k;
+	std::string k;
 	switch (modify) {
 	case 0: 
 		k = showKey;
@@ -65,6 +65,9 @@ std::string getTargetID(std::string path, int modify) {
 		break;
 	case 2:
 		k = ctrlShowKey;
+		break;
+	default:
+		k = showKey;
 		break;
 	}
 	auto toShow = rawJSON[k];
@@ -110,15 +113,15 @@ bool dontShowPopupHere() {
 
 bool getShift() { return CCKeyboardDispatcher::get()->getShiftKeyPressed(); }
 bool getAlt() { return CCKeyboardDispatcher::get()->getAltKeyPressed(); }
-bool getCtrl() { return CCKeybordDispatcher::get()->getControlKeyPressed(); }
+bool getCtrl() { return CCKeyboardDispatcher::get()->getControlKeyPressed(); }
 
 void prepPopup() {
 	if (dontShowPopupHere()) return;
-	auto id;
+	std::string id="";
 	if (getAlt()) {
 		id = getTargetID(CustomAlert::jsonFilePath, 1);
 	}
-	else if (getCtrl) {
+	else if (getCtrl()) {
 		id = getTargetID(CustomAlert::jsonFilePath, 2);
 	}
 	else {
@@ -134,11 +137,11 @@ void prepPopup() {
 
 void prepTextbox() {
 	if (dontShowPopupHere()) return;
-	auto id;
+	std::string id="";
 	if (getAlt()) {
 		id = getTargetID(CustomTextbox::jsonFilePath, 1);
 	}
-	else if (getCtrl) {
+	else if (getCtrl()) {
 		id = getTargetID(CustomTextbox::jsonFilePath, 2);
 	}
 	else {
@@ -154,11 +157,11 @@ void prepTextbox() {
 
 void prepChest() {
 	if (dontShowPopupHere()) return;
-	auto id;
+	std::string id="";
 	if (getAlt()) {
 		id = getTargetID(CustomChest::jsonFilePath, 1);
 	}
-	else if (getCtrl) {
+	else if (getCtrl()) {
 		id = getTargetID(CustomChest::jsonFilePath, 2);
 	}
 	else {

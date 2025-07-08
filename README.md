@@ -12,6 +12,7 @@ Main keybinds (can be changed in settings if you have a tiny ahh keyboard):
 Additionally:
 - Hold SHIFT to "queue" the textbox, which delays it until the next menu button you click
 - Hold ALT to display the secondary popup/chest/etc
+- Hold Control to display a tertiary popup/chest/etc
 - Press SHIFT+ESC to instantly close every active textbox
 
 Most fields support \<cg>color tags\</c>, which are documented here: https://wyliemaster.github.io/gddocs/#/topics/tags?id=tags
@@ -36,6 +37,7 @@ General syntax for ALL FILES is:
 {
     "to-show": "name",  // spawned when pressing hotkey
     "to-show-alt": "alt-name",  // spawned when holding alt and pressing hotkey
+    "to-show-ctrl": "ctrl-name" // spawned when holding control and pressing hotkey
 
     "name": {
         // data goes here...
@@ -44,6 +46,10 @@ General syntax for ALL FILES is:
     "alt-name": {
         // data goes here, used when alt is held
     },
+
+    "ctrl-name": {
+        // data goes here, used when control is held
+    }
 
     "another-one" {
         // store as many of these as you like!

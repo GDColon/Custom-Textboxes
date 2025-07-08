@@ -19,6 +19,7 @@ std::string queuedTextbox = "";
 
 std::string showKey = "to-show";
 std::string altShowKey = "to-show-alt";
+std::string ctrlShowKey = "to-show-ctrl"
 
 // ===== //
 
@@ -43,7 +44,10 @@ void playQueueSound() {
 	FMODAudioEngine::sharedEngine()->playEffect("counter003.ogg");
 }
 
-std::string getTargetID(std::string path, bool alt) {
+/*
+* modify is 0 for none, 1 for alt, 2 for control
+*/
+std::string getTargetID(std::string path, int modify) {
     if (!fs::exists(path)) {
 		checkMissingFiles();
     }
@@ -51,7 +55,18 @@ std::string getTargetID(std::string path, bool alt) {
 	auto rawJSON = readJSON(path);
     if (rawJSON == nullptr) return "";
 
-	auto k = alt ? altShowKey : showKey;
+	auto k;
+	switch (modify) {
+	case 0: 
+		k = showKey;
+		break;
+	case 1:
+		k = altShowKey;
+		break;
+	case 2:
+		k = ctrlShowKey;
+		break;
+	}
 	auto toShow = rawJSON[k];
 
 	if (!toShow.isString()) {
@@ -95,10 +110,20 @@ bool dontShowPopupHere() {
 
 bool getShift() { return CCKeyboardDispatcher::get()->getShiftKeyPressed(); }
 bool getAlt() { return CCKeyboardDispatcher::get()->getAltKeyPressed(); }
+bool getCtrl() { return CCKeybordDispatcher::get()->getControlKeyPressed(); }
 
 void prepPopup() {
 	if (dontShowPopupHere()) return;
-	auto id = getTargetID(CustomAlert::jsonFilePath, getAlt());
+	auto id;
+	if (getAlt()) {
+		id = getTargetID(CustomAlert::jsonFilePath, 1);
+	}
+	else if (getCtrl) {
+		id = getTargetID(CustomAlert::jsonFilePath, 2);
+	}
+	else {
+		id = getTargetID(CustomAlert::jsonFilePath, 0);
+	}
 	if (id == "_") return;
 	if (getShift()) {
 		queuedPopup = id;
@@ -109,7 +134,16 @@ void prepPopup() {
 
 void prepTextbox() {
 	if (dontShowPopupHere()) return;
-	auto id = getTargetID(CustomTextbox::jsonFilePath, getAlt());
+	auto id;
+	if (getAlt()) {
+		id = getTargetID(CustomTextbox::jsonFilePath, 1);
+	}
+	else if (getCtrl) {
+		id = getTargetID(CustomTextbox::jsonFilePath, 2);
+	}
+	else {
+		id = getTargetID(CustomTextbox::jsonFilePath, 0);
+	}
 	if (id == "_") return;
 	if (getShift()) {
 		queuedTextbox = id;
@@ -120,7 +154,16 @@ void prepTextbox() {
 
 void prepChest() {
 	if (dontShowPopupHere()) return;
-	auto id = getTargetID(CustomChest::jsonFilePath, getAlt());
+	auto id;
+	if (getAlt()) {
+		id = getTargetID(CustomChest::jsonFilePath, 1);
+	}
+	else if (getCtrl) {
+		id = getTargetID(CustomChest::jsonFilePath, 2);
+	}
+	else {
+		id = getTargetID(CustomChest::jsonFilePath, 0);
+	}
 	if (id == "_") return;
 	if (getShift()) {
 		queuedChest = id;

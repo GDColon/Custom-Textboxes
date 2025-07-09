@@ -95,7 +95,14 @@ bool dontShowPopupHere() {
 }
 
 bool getShift() { return CCKeyboardDispatcher::get()->getShiftKeyPressed(); }
-bool getAlt() { return CCKeyboardDispatcher::get()->getAltKeyPressed(); }
+bool getAlt() { 
+	if (Mod::get()->getSettingValue<bool>("ctrl")) {
+		return CCKeyboardDispatcher::get()->getControlKeyPressed();
+	}
+	else {
+		return CCKeyboardDispatcher::get()->getAltKeyPressed();
+	}
+}
 
 void prepPopup() {
 	if (dontShowPopupHere()) return;

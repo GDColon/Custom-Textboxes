@@ -40,6 +40,12 @@
 			"default": 45
 		},
 
+		"ctrl": {
+			"name": "Use control instead of alt",
+			"description": "Use the control key to spawn the alternate text box instead of the alt key",
+			"type": "bool",
+			"default": false
+		},
 
 		"missingIDWarn": {
             "name": "Warn when missing ID",

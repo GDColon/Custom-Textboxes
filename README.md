@@ -104,6 +104,7 @@ Default keybind is HOME
     - Main ones are brown, blue, green, purple, grey, lightgrey, transparent (GJ_square0#.png)
     - Can also do fancy (default for FLAlertLayers), black, white, whiteoutline, roundgrey, cyan, red, darkpurple, darkblue, geode, trans
 - `sound` ([filename](#sound-files-can-be-read-from) or [Sound](#sound-object)) - Sound effect to play when popup appears
+- `instant` (bool) - Disables the bouncing animation when spawning
 
 **Button properties** can be a string, OR an object with any of:
 - `content` (string or Text) - The message on the button

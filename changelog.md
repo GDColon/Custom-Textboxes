@@ -1,3 +1,7 @@
+# 1.0.5
+- Added `instant` property for popups which skips the bounce animation
+- Fixed buttons not being the correct width
+
 # 1.0.4
 - Added `customButtons` property for popups which allows you to add more buttons
 - Added `z` property for popup buttons which modify Z ordering

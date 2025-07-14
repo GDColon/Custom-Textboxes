@@ -18,6 +18,8 @@ void CustomAlert::showPopup(std::string id)
     bool hasButton = data.contains("button1") || data.contains("button");
     matjson::Value button1 = hasButton ? (data.contains("button1") ? data["button1"] : data["button"]) : nullptr;
 
+    bool instant = getBool(data, "instant");
+
     if (data.contains("sound")) playCustomSound(data["sound"]);
 
     if (alertType == "item" || alertType == "icon" || alertType == "unlock") {
@@ -27,7 +29,6 @@ void CustomAlert::showPopup(std::string id)
             icon.id,
             static_cast<UnlockType>(icon.type)
         );
-        popup->setID("custom_iconpopup"_spr);
         
         CCLayer* iconLayer = popup->m_mainLayer;
 
@@ -61,6 +62,8 @@ void CustomAlert::showPopup(std::string id)
 
         customizeIcon(iconLayer->getChildByType<GJItemIcon>(0)->m_player, data);
 
+        popup->m_noElasticity = instant;
+        popup->setID("custom_iconpopup"_spr);
         popup->show();
     }
 
@@ -75,7 +78,6 @@ void CustomAlert::showPopup(std::string id)
         );
 
         PurchaseItemPopup* popup = PurchaseItemPopup::create(item);
-        popup->setID("custom_shoppopup"_spr);
         
         CCLayer* purchaseLayer = popup->m_mainLayer;
 
@@ -105,6 +107,8 @@ void CustomAlert::showPopup(std::string id)
 
         customizeIcon(purchaseLayer->getChildByType<GJItemIcon>(0)->m_player, data);
 
+        popup->m_noElasticity = instant;
+        popup->setID("custom_shoppopup"_spr);
         popup->show();
     }
 
@@ -123,6 +127,7 @@ void CustomAlert::showPopup(std::string id)
 
         setBorder(popup->m_mainLayer, data);
 
+        popup->m_noElasticity = instant;
         popup->setID("custom_modpopup"_spr);
         popup->show();
 
@@ -135,28 +140,29 @@ void CustomAlert::showPopup(std::string id)
 
 
     else if (alertType == "comment") {
-        ShareCommentLayer* comment = ShareCommentLayer::create(
+        ShareCommentLayer* popup = ShareCommentLayer::create(
             title,
             getInt(data, "charLimit", 100),
             static_cast<CommentType>(getKey(data, "commentType", COMMENT_TYPES, 0)), 1,
             hasContent ? getText(content, "") : ""
         );
-        comment->setID("custom_commentpopup"_spr);
         
-        comment->m_percent = getInt(data, "percent", 0);
+        popup->m_percent = getInt(data, "percent", 0);
 
-        comment->show();
+        popup->m_noElasticity = instant;
+        popup->setID("custom_commentpopup"_spr);
+        popup->show();
 
-        setBorder(comment->m_mainLayer, data);
+        setBorder(popup->m_mainLayer, data);
 
         if (data.contains("title")) {
-            customizeText(comment->m_mainLayer->getChildByType<CCLabelBMFont>(0), data["title"]);
+            customizeText(popup->m_mainLayer->getChildByType<CCLabelBMFont>(0), data["title"]);
         }
 
-        if (hasButton) customizeButton(comment->m_buttonMenu->getChildByType<CCMenuItemSpriteExtra>(-1), comment, button1, "");
-        if (data.contains("button2")) customizeButton(comment->m_buttonMenu->getChildByType<CCMenuItemSpriteExtra>(-2), comment, data["button2"], "");
+        if (hasButton) customizeButton(popup->m_buttonMenu->getChildByType<CCMenuItemSpriteExtra>(-1), popup, button1, "");
+        if (data.contains("button2")) customizeButton(popup->m_buttonMenu->getChildByType<CCMenuItemSpriteExtra>(-2), popup, data["button2"], "");
 
-        setupCustomButtons(comment, data);
+        setupCustomButtons(popup, data);
     }
 
 
@@ -173,6 +179,8 @@ void CustomAlert::showPopup(std::string id)
             data.contains("button2") ? getText(data["button2"], "Cancel").c_str() : nullptr,
             width
         );
+
+        popup->m_noElasticity = instant;
         popup->setID("custom_alertpopup"_spr);
         popup->show();
 
@@ -258,7 +266,6 @@ void customizeButton(CCMenuItemSpriteExtra* buttonBase, CCObject* parent, matjso
     CCLabelBMFont* label = button->getChildByType<CCLabelBMFont>(0);
     if (!label) return;
 
-    CCScale9Sprite* slice = button->getChildByType<CCScale9Sprite>(0);
 
     if (fallback == "") fallback = label->m_sInitialStringUTF8;
     std::string str = getText(data, fallback);
@@ -268,6 +275,7 @@ void customizeButton(CCMenuItemSpriteExtra* buttonBase, CCObject* parent, matjso
     
     // ====== //
 
+    CCScale9Sprite* slice = button->getChildByType<CCScale9Sprite>(0);
     if (slice && data.contains("texture")) {
         auto customTexture = getCustomTexture(getStr(data, "texture").c_str(), "GJ_button_06.png", true);
         set9SpriteFrame(slice, customTexture);  // button->updateBGImage() is very prone to crashes
@@ -295,6 +303,7 @@ void customizeButton(CCMenuItemSpriteExtra* buttonBase, CCObject* parent, matjso
     float w = getNum(data, "width", std::clamp(label->getContentWidth() + 14.0f, size.width, 150.0f));
     float h = getNum(data, "height", size.height);
 
+    slice = button->getChildByType<CCScale9Sprite>(0); // need to get this again for some reason
     if (slice && (w != size.width || h != size.height)) {
         buttonBase->setContentSize({w, h});
         label->setPositionX(w / 2.0f);

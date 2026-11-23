@@ -360,7 +360,11 @@ void createCloseButton(FLAlertLayer* parent, matjson::Value data, CCPoint positi
     closeBtn->setID("close-button"_spr);
     parent->m_buttonMenu->addChild(closeBtn);
 
-    if (close.isObject()) setCustomButtonCallback(closeBtn, parent, close);
+    if (close.isObject())
+        setCustomButtonCallback(closeBtn, parent, close);
+    
+    else
+        closeBtn->addActivateCallback([parent](auto) { parent->keyBackClicked(); }); 
 }
 
 void customizeIcon(CCSprite* iconSpr, matjson::Value data) {

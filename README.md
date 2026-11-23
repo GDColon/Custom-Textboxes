@@ -95,6 +95,7 @@ Default keybind is HOME
     - "mod" (the mod send popup, why not)
 - `title` (string or Text) - The header text
 - `content` (string or Text) - The main body text
+    - Supports up to 5 emotes, like comments
 - `button` (string or Button) - Button 1, defaults to "OK"
 - `button2` (string or Button) - Button 2, if you want one
     - Button 2 is also the "cancel" button for "comment" and "mod" types
@@ -151,7 +152,7 @@ Extra properties exclusive to icon/shop type:
 
 **Extra properties exclusive to comment type:**
 - `commentType` (string or int) - Type of comment input
-    - Can be level, profile, friend, list, or listname
+    - Can be level, profile, friend, list, listname, or note
 - `charLimit` (int) - Character limit for the text field
 - `percent` (int) - Percentage on level when clicking the checkbox
 
@@ -187,6 +188,8 @@ Advanced example:
 
 
 ## Custom Dialogue Boxes
+
+!!! **I have a website for this!** My GD Textbox Generator has an option to export textbox sequences into this mod's JSON format. Check it out here: https://gdcolon.com/gdtextbox/
 
 Spawns a sequence of custom dialogue boxes
 

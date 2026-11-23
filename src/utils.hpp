@@ -105,8 +105,6 @@ inline std::map<std::string, int> ITEM_TYPES = {
 
 inline std::regex errorPattern(R"(>:(\d+):(\d+)$)");
 
-inline std::string NULL_TEXTURE = "geode.texture-loader/fallback";
-
 inline matjson::Value readJSON(std::filesystem::path path, std::string& err) {
 	std::ifstream jsonFile(path);
     auto parsed = matjson::parse(jsonFile);
@@ -200,11 +198,11 @@ inline ccColor3B getColor(matjson::Value data, char const* key = "color", ccColo
 inline CCSprite* getCustomTexture(char const* frame, char const* fallback, bool fallbackIsResource = false) {
     // Search spritesheets
     CCSprite* customTexture = CCSprite::createWithSpriteFrameName(frame);
-    if (customTexture != nullptr && !customTexture->getUserObject(NULL_TEXTURE)) return customTexture;
+    if (customTexture != nullptr && !customTexture->isUsingFallback()) return customTexture;
 
     // Search resources
     CCSprite* customResource = CCSprite::create(frame);
-    if (customResource != nullptr && !customResource->getUserObject(NULL_TEXTURE)) return customResource;
+    if (customResource != nullptr && !customResource->isUsingFallback()) return customResource;
 
     // Return fallback for borders
     if (fallbackIsResource) return CCSprite::create(fallback);

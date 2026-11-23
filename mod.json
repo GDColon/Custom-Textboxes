@@ -1,12 +1,12 @@
 {
-	"geode": "5.0.0",
+	"geode": "6.0.0-beta.2",
 	"gd": {
-		"win": "2.2081",
-		"mac": "2.2081"
+		"win": "2.2091",
+		"mac": "2.2091"
 	},
 	"id": "colon.customtextboxes",
 	"name": "Custom Textboxes",
-	"version": "v1.0.6",
+	"version": "v1.0.7",
 	"developer": "Colon",
 	"description": "Display custom popups, chests, and more",
 	"resources": {

@@ -25,7 +25,8 @@ private:
         { "account", 1 },
         { "friend", 2 },
         { "list", 4 },
-        { "listname", 5 }
+        { "listname", 5 },
+        { "note", 9 }
     };
 };
 

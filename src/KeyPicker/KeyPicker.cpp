@@ -18,13 +18,17 @@ protected:
     bool init(std::shared_ptr<KeyPicker> setting, float width) {
         if (!SettingValueNodeV3::init(setting, width)) return false;
             
-        m_buttonSprite = ButtonSprite::create("", 120, 120, 0.8f, false, "goldFont.fnt", "GJ_button_01.png", 30);
+        m_buttonSprite = ButtonSprite::create("", 120, 120, 0.8f, false, "goldFont.fnt", "geode.loader/GE_button_05.png", 30);
         m_buttonSprite->setScale(0.6f);
         m_button = CCMenuItemSpriteExtra::create(
             m_buttonSprite, this, menu_selector(KeybindNode::onChooseKey)
         );
         m_label = m_buttonSprite->getChildByType<CCLabelBMFont>(0);
-        this->getButtonMenu()->addChildAtPosition(m_button, Anchor::Right, {-42, 0});
+
+        auto menu = CCMenu::create();
+        menu->addChild(m_button);
+
+        this->getButtonMenu()->addChildAtPosition(menu, Anchor::Right, {-42, 0});
         this->getButtonMenu()->setContentWidth(120);
         this->getButtonMenu()->updateLayout();
 

@@ -1,3 +1,8 @@
+# 1.0.7
+- 2.209 support
+- Removed "mod" alert type since it no longer works
+- Added "note" comment type
+
 # 1.0.6
 - 2.208 support
 

@@ -92,7 +92,6 @@ Default keybind is HOME
     - "icon" (the popup when selecting a locked icon)
     - "shop" (the popup when purchasing an item)
     - "comment" (the popup when entering a comment)
-    - "mod" (the mod send popup, why not)
 - `title` (string or Text) - The header text
 - `content` (string or Text) - The main body text
     - Supports up to 5 emotes, like comments

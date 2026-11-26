@@ -112,31 +112,34 @@ void CustomAlert::showPopup(std::string id)
         popup->show();
     }
 
-    else if (alertType == "mod") {
-        RateStarsLayer* popup = RateStarsLayer::create(
-            12107595, // jajaja
-            getBool(data, "platformer", false), // is platformer
-            true  // is mod
-        );
-        CCLayer* modLayer = popup->m_mainLayer;
 
-        if (data.contains("title")) {
-            CCLabelBMFont* modHeader = modLayer->getChildByType<CCLabelBMFont>(0);
-            customizeText(modHeader, data["title"]);
-        }
+    // inlined as of 2.209, this no longer works :(
 
-        setBorder(popup->m_mainLayer, data);
+        // else if (alertType == "mod") {
+        //     RateStarsLayer* popup = RateStarsLayer::create(
+        //         12107595, // jajaja
+        //         getBool(data, "platformer", false), // is platformer
+        //         true  // is mod
+        //     );
+        //     CCLayer* modLayer = popup->m_mainLayer;
 
-        popup->m_noElasticity = instant;
-        popup->setID("custom_modpopup"_spr);
-        popup->show();
+        //     if (data.contains("title")) {
+        //         CCLabelBMFont* modHeader = modLayer->getChildByType<CCLabelBMFont>(0);
+        //         customizeText(modHeader, data["title"]);
+        //     }
 
-        popup->m_submitButton->setTarget(popup, menu_selector(RateStarsLayer::onClose));
+        //     setBorder(popup->m_mainLayer, data);
 
-        if (hasButton) customizeButton(popup->m_submitButton, popup, button1, "Submit");
+        //     popup->m_noElasticity = instant;
+        //     popup->setID("custom_modpopup"_spr);
+        //     popup->show();
 
-        setupCustomButtons(popup, data);
-    }
+        //     popup->m_submitButton->setTarget(popup, menu_selector(RateStarsLayer::onClose));
+
+        //     if (hasButton) customizeButton(popup->m_submitButton, popup, button1, "Submit");
+
+        //     setupCustomButtons(popup, data);
+        // }
 
 
     else if (alertType == "comment") {
